@@ -10,7 +10,7 @@ $(document).ready(function($) {
   var baseHref = '';
   if ($('base').attr('href') != undefined) baseHref = $('base').attr('href');
 
-  $('a').on('click', function(event) {
+  $('body').on('click', 'a', function(event) {
     var el = $(this);
     var track = true;
     var href = (typeof(el.attr('href')) != 'undefined' ) ? el.attr('href') :"";
