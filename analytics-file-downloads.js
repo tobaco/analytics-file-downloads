@@ -14,33 +14,34 @@ $(document).ready(function($) {
     var el = $(this);
     var track = true;
     var href = (typeof(el.attr('href')) != 'undefined' ) ? el.attr('href') :"";
-    var isThisDomain = href.match(document.domain.split('.').reverse()[1] + '.' + document.domain.split('.').reverse()[0]);
-    if (!href.match(/^javascript:/i)) {
+    var hrefWithoutQuery = href.split(/[?#]/)[0];
+    var isThisDomain = hrefWithoutQuery.match(document.domain.split('.').reverse()[1] + '.' + document.domain.split('.').reverse()[0]);
+    if (!hrefWithoutQuery.match(/^javascript:/i)) {
   	var elEv = []; elEv.value=0, elEv.non_i=false;
-      if (href.match(/^mailto\:/i)) {
+      if (hrefWithoutQuery.match(/^mailto\:/i)) {
         elEv.category = "email";
         elEv.action = "click";
-        elEv.label = href.replace(/^mailto\:/i, '');
+        elEv.label = hrefWithoutQuery.replace(/^mailto\:/i, '');
         elEv.loc = href;
       }
-      else if (href.match(filetypes)) {
-        var extension = (/[.]/.exec(href)) ? /[^.]+$/.exec(href) : undefined;
+      else if (hrefWithoutQuery.match(filetypes)) {
+        var extension = (/[.]/.exec(hrefWithoutQuery)) ? /[^.]+$/.exec(hrefWithoutQuery) : undefined;
         elEv.category = "download";
         elEv.action = "click-" + extension[0];
-        elEv.label = href.replace(/ /g,"-");
+        elEv.label = hrefWithoutQuery.replace(/ /g,"-");
         elEv.loc = baseHref + href;
       }
-      else if (href.match(/^https?\:/i) && !isThisDomain) {
+      else if (hrefWithoutQuery.match(/^https?\:/i) && !isThisDomain) {
         elEv.category = "extern";
         elEv.action = "click";
-        elEv.label = href.replace(/^https?\:\/\//i, '');
+        elEv.label = hrefWithoutQuery.replace(/^https?\:\/\//i, '');
         elEv.non_i = true;
         elEv.loc = href;
       }
-      else if (href.match(/^tel\:/i)) {
+      else if (hrefWithoutQuery.match(/^tel\:/i)) {
         elEv.category = "telefon";
         elEv.action = "click";
-        elEv.label = href.replace(/^tel\:/i, '');
+        elEv.label = hrefWithoutQuery.replace(/^tel\:/i, '');
         elEv.loc = href;
       }
       else track = false;
