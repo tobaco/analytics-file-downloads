@@ -54,7 +54,7 @@ $(document).ready(function($) {
           'transport_type': 'beacon',
           'event_callback': function(){
             if ( el.attr('target') == undefined || el.attr('target').toLowerCase() != '_blank') {
-              location.href = elEv.loc; };
+              location.href = elEv.loc;
             }
            }
         });
